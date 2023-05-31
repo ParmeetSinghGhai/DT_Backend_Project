@@ -1,0 +1,516 @@
+Nudge API
+=============================
+Overview
+=============================
+
+1) Nudge object is considered as an seperate object on its own even though its linked to the events object.
+
+2) its loosely coupled with the event object which means that it can exist on its own without getting linked to an event object. In such a case it can act as a template for other nudge objects which are linked to event object. 
+
+3) There is also a many-many relationship between the event object and nudge object which means that one nudge object can be linked to mutiple events and one event can have multiple nudge objects linked it it.
+
+4) The nudge object contains the following fields:
+
+	a) int Id - unique identifier for the nudge object
+	b) string Title - self explanatory 
+	c) string Invitation - self explanatory 
+	d) string Base64Cover - this is the file content of the image file that acts as the cover for the nudge object but the content of the file is in base64 format.
+	e) string Base64Icon - this is the file content of the icon file attached to the nudge object but the content of the file is in base64 format.
+	f) DateTime Schedule - date and time field that contains the scheduled date for the nudge object
+	g) Event[] Events - an array of the all events which are currently linked to this nudge object
+		
+		
+Following is the list of the API(s) discussed below in detail:
+
+1) Request:GET, BaseURL = /api/v3/app,  Endpoint = /nudges?id=nudge_id  = Gets a nudge object by using its id.
+2) Request:GET, BaseURL = /api/v3/app,  Endpoint = /nudges?eventid=event_id = Gets an array of nudge objects linked to an event.
+3) Request:POST, BaseURL = /api/v3/app,  Endpoint =/nudges = Adds or creates a new nudge object.
+4) Request:POST, BaseURL = /api/v3/app,  Endpoint =/nudges/{id:int} = Clones an existing nudge object into a new nudge object.
+5) Request:PUT, BaseURL = /api/v3/app,  Endpoint =/nudges/{id:int} = Updates an existing nudge object
+6) Request:DELETE, BaseURL = /api/v3/app,  Endpoint =/nudges/{id:int} = Deletes an existing nudge object
+			
+		
+
+=============================
+Request:GET, BaseURL = /api/v3/app ,  Endpoint = /nudges?id=nudge_id
+=============================
+	
+	Description
+	-----------------------------
+	This REST API gathers information on a nudge object identified by its unique id in the database and sends it off to the user in 
+	JSON format.
+		
+	Input
+	-----------------------------
+	The required input is the nudge id of an existing nudge in the database.
+
+	Output
+	-----------------------------
+	The output is in JSON format as shown below:
+	{
+		status: type:string values:success,error
+		json: nudge object
+		info: type:string value: detailed error message
+	}
+	
+	Example
+	-----------------------------
+	{
+    "status": "success",
+    "json": {
+        "id": 10,
+        "title": "special event",
+        "invitation": "every one over the age of 18 are invited",
+        "base64cover": "data in base64 format",
+        "base64icon": "data in base64 format",
+        "schedule": "2023-06-28T00:00:00",
+        "events": []
+    },
+    "info": ""
+	}
+	
+=============================
+Request:GET, BaseURL = /api/v3/app ,  Endpoint = /nudges?eventid=event_id
+=============================
+	Description
+	-----------------------------
+	This REST API collects all nudge objects which are attached to one event object and send that data off to the user in JSON format
+		
+	Input
+	-----------------------------
+	The required input is the event id of an existing event in the database.
+
+	Output
+	-----------------------------
+	The output is in JSON format as shown below:
+	{
+		status: type:string values:success,error
+		json: Array of nudge object(s)
+		info: type:string value: detailed error message
+	}
+
+	Example
+	-----------------------------
+	{
+    "status": "success",
+    "json": [
+        {
+            "id": 11,
+            "title": "ultra special event",
+            "invitation": "only presidential candidated are invited",
+            "base64cover": "data in base64 format",
+            "base64icon": "data in base64 format",
+            "schedule": "2023-06-25T00:00:00",
+            "events": [
+                {
+                    "id": 2029,
+                    "name": "Work Bakery Event 2",
+                    "tagline": "Awesome cakes in the world",
+                    "schedule": "2023-06-16T00:00:00",
+                    "description": "Watch the best chefs in the world bake the best cakes in the world",
+                    "category": "Bake Off competition",
+                    "subcategory": "Baking",
+                    "rigor_rank": 22,
+                    "owner": [
+                        "1062",
+                        "Parmeet",
+                        "Ghai"
+                    ],
+                    "moderator": [
+                        "1063",
+                        "John",
+                        "Tucker"
+                    ],
+                    "attendees": [
+                        [
+                            "1064",
+                            "Kate",
+                            "Smalls"
+                        ],
+                        [
+                            "1065",
+                            "Neil",
+                            "Tyson"
+                        ]
+                    ],
+                    "files": [
+                        [
+                            "1040",
+                            "cake1.png",
+                            "base64 of a picture of cake"
+                        ],
+                        [
+                            "1041",
+                            "cake2.png",
+                            "base64 of a picture of a baked cake"
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "title": "do you like baked goods ?",
+            "invitation": "anyone that loves food",
+            "base64cover": "data in base64 format",
+            "base64icon": "data in base64 format",
+            "schedule": "2023-06-23T00:00:00",
+            "events": [
+                {
+                    "id": 2029,
+                    "name": "Work Bakery Event 2",
+                    "tagline": "Awesome cakes in the world",
+                    "schedule": "2023-06-16T00:00:00",
+                    "description": "Watch the best chefs in the world bake the best cakes in the world",
+                    "category": "Bake Off competition",
+                    "subcategory": "Baking",
+                    "rigor_rank": 22,
+                    "owner": [
+                        "1062",
+                        "Parmeet",
+                        "Ghai"
+                    ],
+                    "moderator": [
+                        "1063",
+                        "John",
+                        "Tucker"
+                    ],
+                    "attendees": [
+                        [
+                            "1064",
+                            "Kate",
+                            "Smalls"
+                        ],
+                        [
+                            "1065",
+                            "Neil",
+                            "Tyson"
+                        ]
+                    ],
+                    "files": [
+                        [
+                            "1040",
+                            "cake1.png",
+                            "base64 of a picture of cake"
+                        ],
+                        [
+                            "1041",
+                            "cake2.png",
+                            "base64 of a picture of a baked cake"
+                        ]
+                    ]
+                }
+            ]
+        }
+    ],
+    "info": ""
+}
+
+=============================
+Request:POST, BaseURL = /api/v3/app,  Endpoint =/nudges
+=============================
+	Description
+	-----------------------------
+	This REST API lets the user add a nudge into the database. The body of the request should be in JSON format containing the fields mentioned below
+	
+	Input
+	-----------------------------
+	The required input as the method body should be a JSON object containing the following fields:
+	{
+		"title": free-form string,
+		"invitation": free-form string,
+		"base64cover": file content in base64 format,
+		"base64icon": file content in base64 format,
+		"schedule": datetime,
+		"events": Array of int containing the id of the events which are supposed to be linked to nudge
+	}
+	
+	Example
+	-----------------------------
+	{
+    "title":"do you like baked goods ?",
+    "invitation": "anyone that loves food",
+    "base64cover":"data in base64 format",
+    "base64icon":"data in base64 format",
+    "schedule":"2023-06-23",
+    "events":[2029]
+	}
+	
+	Output
+	-----------------------------
+	The output is in JSON format as shown below:
+	{
+		status: type:string, values:success,error
+		json: nudge object
+		info: type:string, value: detailed error message
+	}
+	
+	Example
+	-----------------------------
+	{
+    "status": "success",
+    "json": {
+        "id": 13,
+        "title": "do you like baked goods ?",
+        "invitation": "anyone that loves food",
+        "base64cover": "data in base64 format",
+        "base64icon": "data in base64 format",
+        "schedule": "2023-06-23T00:00:00",
+        "events": [
+            {
+                "id": 2029,
+                "name": "Work Bakery Event 2",
+                "tagline": "Awesome cakes in the world",
+                "schedule": "2023-06-16T00:00:00",
+                "description": "Watch the best chefs in the world bake the best cakes in the world",
+                "category": "Bake Off competition",
+                "subcategory": "Baking",
+                "rigor_rank": 22,
+                "owner": [
+                    "1062",
+                    "Parmeet",
+                    "Ghai"
+                ],
+                "moderator": [
+                    "1063",
+                    "John",
+                    "Tucker"
+                ],
+                "attendees": [
+                    [
+                        "1064",
+                        "Kate",
+                        "Smalls"
+                    ],
+                    [
+                        "1065",
+                        "Neil",
+                        "Tyson"
+                    ]
+                ],
+                "files": [
+                    [
+                        "1040",
+                        "cake1.png",
+                        "base64 of a picture of cake"
+                    ],
+                    [
+                        "1041",
+                        "cake2.png",
+                        "base64 of a picture of a baked cake"
+                    ]
+                ]
+            }
+        ]
+    },
+    "info": ""
+	}
+
+=============================
+Request:POST, BaseURL = /api/v3/app,  Endpoint =/nudges/{id:int}
+=============================	
+	Description
+	-----------------------------
+	This REST API lets the user clone a nudge object into the database. The body of the request should be kept to null.
+	
+	Input
+	-----------------------------
+	The id of the nudge object that is needed to be cloned
+	
+	Output
+	-----------------------------
+	The output is in JSON format as shown below:
+	{
+		status: type:string, values:success,error
+		json: nudge object
+		info: type:string, value: detailed error message
+	}
+	
+	Example
+	-----------------------------
+	{
+    "status": "success",
+    "json": {
+        "id": 14,
+        "title": "special event",
+        "invitation": "every one over the age of 18 are invited",
+        "base64cover": "data in base64 format",
+        "base64icon": "data in base64 format",
+        "schedule": "2023-06-28T00:00:00",
+        "events": [
+            {
+                "id": 2029,
+                "name": "Work Bakery Event 2",
+                "tagline": "Awesome cakes in the world",
+                "schedule": "2023-06-16T00:00:00",
+                "description": "Watch the best chefs in the world bake the best cakes in the world",
+                "category": "Bake Off competition",
+                "subcategory": "Baking",
+                "rigor_rank": 22,
+                "owner": [
+                    "1062",
+                    "Parmeet",
+                    "Ghai"
+                ],
+                "moderator": [
+                    "1063",
+                    "John",
+                    "Tucker"
+                ],
+                "attendees": [
+                    [
+                        "1064",
+                        "Kate",
+                        "Smalls"
+                    ],
+                    [
+                        "1065",
+                        "Neil",
+                        "Tyson"
+                    ]
+                ],
+                "files": [
+                    [
+                        "1040",
+                        "cake1.png",
+                        "base64 of a picture of cake"
+                    ],
+                    [
+                        "1041",
+                        "cake2.png",
+                        "base64 of a picture of a baked cake"
+                    ]
+                ]
+            }
+        ]
+    },
+    "info": ""
+	}
+	
+=============================
+Request:PUT, BaseURL = /api/v3/app,  Endpoint =/nudges/{id:int}
+=============================
+	Description
+	-----------------------------
+	This REST API lets the user modify an existing nudge in the database. The body of the request should be in JSON format containing the fields mentioned below
+	
+	Input
+	-----------------------------
+	1) id of the nudge to be modified 
+	2) body of the method containing JSON data in the following format.
+	
+	Please note that not all fields are required. You just need to mention the fields which you would like to modify 
+	{
+		"title": free-form string,
+		"invitation": free-form string,
+		"base64cover": file content in base64 format,
+		"base64icon": file content in base64 format,
+		"schedule": datetime,
+	}
+	with the fields mentioned above, the value of the field will overwrite the existing value of the event object in database.
+	
+	{
+		"events": [id,id,id..]
+	}
+	for "events" object, the following format is used:
+	1) if Id is set to an Id of an existing nudge in the database however its prepend with negative sign (-) then that event object will be unlinked from the nudge object.
+	2) if Id is set to an ID of an existing nudge in the database and is used as is (positive value) then that event object is linked to the nudge object, if its not already linked.
+	
+	Output
+	-----------------------------
+	The output is in JSON format as shown below:
+	{
+		status: type:string, values:success,error
+		json: modified nudge object
+		info: type:string, value: detailed error message
+	}
+	
+	Example
+	-----------------------------
+	{
+    "status": "success",
+    "json": {
+        "id": 10,
+        "title": "special event",
+        "invitation": "every one over the age of 18 are invited",
+        "base64cover": "data in base64 format",
+        "base64icon": "data in base64 format",
+        "schedule": "2023-06-28T00:00:00",
+        "events": [
+            {
+                "id": 2029,
+                "name": "Work Bakery Event 2",
+                "tagline": "Awesome cakes in the world",
+                "schedule": "2023-06-16T00:00:00",
+                "description": "Watch the best chefs in the world bake the best cakes in the world",
+                "category": "Bake Off competition",
+                "subcategory": "Baking",
+                "rigor_rank": 22,
+                "owner": [
+                    "1062",
+                    "Parmeet",
+                    "Ghai"
+                ],
+                "moderator": [
+                    "1063",
+                    "John",
+                    "Tucker"
+                ],
+                "attendees": [
+                    [
+                        "1064",
+                        "Kate",
+                        "Smalls"
+                    ],
+                    [
+                        "1065",
+                        "Neil",
+                        "Tyson"
+                    ]
+                ],
+                "files": [
+                    [
+                        "1040",
+                        "cake1.png",
+                        "base64 of a picture of cake"
+                    ],
+                    [
+                        "1041",
+                        "cake2.png",
+                        "base64 of a picture of a baked cake"
+                    ]
+                ]
+            }
+        ]
+    },
+    "info": ""
+	}
+	
+=============================
+Request:DELETE, BaseURL = /api/v3/app,  Endpoint =/nudges/{id:int}
+=============================
+	Description
+	-----------------------------
+	This REST API lets the user delete an existing nudge in the database.
+	
+	Input
+	-----------------------------
+	1) id of the nudge to be modified 
+	2) body of the method should be null
+	
+	Output
+	-----------------------------
+	The output is in JSON format as shown below:
+	{
+		status: type:string, values:success,error
+		json: null
+		info: type:string, value: detailed error message
+	}
+	
+	Example
+	-----------------------------
+	{
+    "status": "success",
+    "json": "",
+    "info": ""
+	}

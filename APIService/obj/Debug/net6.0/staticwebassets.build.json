@@ -1,0 +1,19 @@
+{
+  "Version": 1,
+  "Hash": "h9gVdZpeTYkvRwendBtt378mgKEMZLcHSqdqf73JzXY=",
+  "Source": "APIService",
+  "BasePath": "_content/APIService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "APIService\\wwwroot",
+      "Source": "APIService",
+      "ContentRoot": "C:\\Users\\parme\\Desktop\\API_Project\\Project\\APIService\\wwwroot\\",
+      "BasePath": "_content/APIService",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": []
+}

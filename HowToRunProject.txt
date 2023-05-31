@@ -1,0 +1,7 @@
+1) Open Folder: APIDatabase and restore database file: db.bak onto any Microsoft SQL server instance. I used localDB for testing purposes.
+2) If needed there are Database queries located in APIDatabase\DBQueries which can be used to create individual tables in the database.
+3) Update the file "DBConnectionString" with your SQL server instance name and the name of the database that was restored on the step 1 above.
+4) the folder APIService contains the Visual Studio project which can be compiled and rebuilt if needed. 
+5) navigate to : \APIService\bin\Debug\net6.0 and paste the file "DBConnectionString" in here then run the file "APIService.exe". 
+6) the API service runs on HTTPS port 5000
+7) POSTMAN queries are saved in file "DTAPI.postman_collection.json".You can import them in POSTMAN to try out the APIs

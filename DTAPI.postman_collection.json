@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "bc1ab16f-e86c-47cb-acaa-945965aec4c5",
+		"name": "DTAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26039853"
+	},
+	"item": [
+		{
+			"name": "Events API",
+			"item": [
+				{
+					"name": "Add Event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Work Bakery Event 2\",\r\n    \"tagline\":\"Awesome cakes in the world\",\r\n    \"schedule\":\"2023-06-16\",\r\n    \"description\":\"Watch the best chefs in the world bake the best cakes in the world\",\r\n    \"category\":\"Bake Off competition\",\r\n    \"subcategory\":\"Baking\",\r\n    \"rigor_rank\":22,\r\n    \"owner\":[-1,\"Parmeet\",\"Ghai\"],\r\n    \"moderator\":[-1,\"John\",\"Tucker\"],\r\n    \"attendees\":[[-1,\"Kate\",\"Smalls\"],[-1,\"Neil\",\"Tyson\"]],\r\n    \"files\":[[-1,\"cake1.png\",\"base64 of a picture of cake\"],[-1,\"cake2.png\",\"base64 of a picture of a baked cake\"]]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5000/api/v3/app/events"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Event",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"owner\":[-1,\"FOP\",\"Sjow\"],\r\n   \"rigor_rank\":1552\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5000/api/v3/app/events/1062"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Event",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5000/api/v3/app/events?id=1028",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v3",
+								"app",
+								"events"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1028"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5000/api/v3/app/events?type=latest&limit=5&page=0",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v3",
+								"app",
+								"events"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "latest"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Event",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "https://localhost:5000/api/v3/app/events/1055"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Nudge API",
+			"item": [
+				{
+					"name": "Add Nudge",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"special event\",\r\n    \"invitation\": \"every one over the age of 18 are invited\",\r\n    \"base64cover\":\"data in base64 format\",\r\n    \"base64icon\":\"data in base64 format\",\r\n    \"schedule\":\"2023-06-28\",\r\n    \"events\":[]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5000/api/v3/app/nudges"
+					},
+					"response": []
+				},
+				{
+					"name": "Clone Nudge",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5000/api/v3/app/nudges/10"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Nudge",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"events\":[2029]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5000/api/v3/app/nudges/10"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Nudge",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5000/api/v3/app/nudges?id=4",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v3",
+								"app",
+								"nudges"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Nudges From Event",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5000/api/v3/app/nudges?eventid=2027",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v3",
+								"app",
+								"nudges"
+							],
+							"query": [
+								{
+									"key": "eventid",
+									"value": "2027"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Nudge",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "https://localhost:5000/api/v3/app/nudges/6"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
